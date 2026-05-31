@@ -5,6 +5,7 @@ import './index.css';
 
 function App() {
   const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
+  const [advanceAmount, setAdvanceAmount] = useState('');
   const [items, setItems] = useState([
     {
       id: crypto.randomUUID(),
@@ -110,6 +111,8 @@ function App() {
   };
 
   const grandTotal = items.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
+  const advance = advanceAmount ? Number(advanceAmount) : 0;
+  const balance = grandTotal - advance;
 
   const renderBillTable = () => (
     <>
@@ -157,6 +160,18 @@ function App() {
             <td colSpan="5" style={{ border: '1px solid #e5e7eb', padding: '1rem 1.5rem', textAlign: 'right', fontWeight: '700', fontSize: '1.1rem' }}>Total Amount</td>
             <td style={{ border: '1px solid #e5e7eb', padding: '1rem 1.5rem', fontWeight: '800', fontSize: '1.2rem', color: '#4F46E5' }}>₹{grandTotal.toFixed(2)}</td>
           </tr>
+          {advance > 0 && (
+            <>
+              <tr>
+                <td colSpan="5" style={{ border: '1px solid #e5e7eb', padding: '1rem 1.5rem', textAlign: 'right', fontWeight: '700', fontSize: '1.1rem' }}>Advance Amount</td>
+                <td style={{ border: '1px solid #e5e7eb', padding: '1rem 1.5rem', fontWeight: '700', fontSize: '1.1rem', color: '#059669' }}>₹{advance.toFixed(2)}</td>
+              </tr>
+              <tr>
+                <td colSpan="5" style={{ border: '1px solid #e5e7eb', padding: '1rem 1.5rem', textAlign: 'right', fontWeight: '700', fontSize: '1.1rem' }}>Balance Amount</td>
+                <td style={{ border: '1px solid #e5e7eb', padding: '1rem 1.5rem', fontWeight: '800', fontSize: '1.2rem', color: '#DC2626' }}>₹{balance.toFixed(2)}</td>
+              </tr>
+            </>
+          )}
         </tfoot>
       </table>
     </>
@@ -297,10 +312,37 @@ function App() {
           </div>
         </div>
 
+        <div className="advance-section print-hidden">
+          <div className="input-group">
+            <label>Advance Amount (Optional)</label>
+            <input 
+              type="number" 
+              min="0"
+              value={advanceAmount} 
+              onChange={(e) => setAdvanceAmount(e.target.value)} 
+              placeholder="Enter advance amount"
+            />
+          </div>
+        </div>
+
         <div className="summary-section print-hidden">
-          <div className="grand-total">
-            <span>Total Amount</span>
-            <span className="amount">₹{grandTotal.toFixed(2)}</span>
+          <div className="summary-content">
+            <div className="grand-total">
+              <span>Total Amount</span>
+              <span className="amount">₹{grandTotal.toFixed(2)}</span>
+            </div>
+            {advance > 0 && (
+              <>
+                <div className="advance-total">
+                  <span>Advance Amount</span>
+                  <span className="amount">₹{advance.toFixed(2)}</span>
+                </div>
+                <div className="balance-total">
+                  <span>Balance Amount</span>
+                  <span className="amount">₹{balance.toFixed(2)}</span>
+                </div>
+              </>
+            )}
           </div>
         </div>
 

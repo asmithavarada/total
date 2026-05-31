@@ -268,12 +268,35 @@ input:focus, select:focus {
   justify-content: center;
 }
 
+.advance-section {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1.5rem 0;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.advance-section .input-group {
+  max-width: 400px;
+  width: 100%;
+  background: #F9FAFB;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--border-color);
+}
+
 .summary-section {
   display: flex;
   justify-content: flex-end;
   padding-top: 2rem;
   border-top: 2px dashed var(--border-color);
   margin-top: 2rem;
+}
+
+.summary-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .grand-total {
@@ -298,6 +321,60 @@ input:focus, select:focus {
 }
 
 .grand-total .amount {
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.advance-total {
+  background: linear-gradient(135deg, #059669, #047857);
+  color: white;
+  padding: 1.5rem 2.5rem;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  min-width: 250px;
+  gap: 0.5rem;
+  box-shadow: 0 10px 20px rgba(5, 150, 105, 0.2);
+}
+
+.advance-total span:first-child {
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.9;
+}
+
+.advance-total .amount {
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.balance-total {
+  background: linear-gradient(135deg, #DC2626, #991B1B);
+  color: white;
+  padding: 1.5rem 2.5rem;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  min-width: 250px;
+  gap: 0.5rem;
+  box-shadow: 0 10px 20px rgba(220, 38, 38, 0.2);
+}
+
+.balance-total span:first-child {
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.9;
+}
+
+.balance-total .amount {
   font-size: 2.5rem;
   font-weight: 800;
   line-height: 1;
