@@ -220,6 +220,7 @@ function App() {
                     <select value={item.thickness} onChange={(e) => updateItem(item.id, 'thickness', e.target.value)}>
                       <option value="50mm">50mm</option>
                       <option value="75mm">75mm</option>
+                      <option value="8 ft length">8 ft length</option>
                       <option value="NA">NA</option>
                     </select>
                   </div>
@@ -231,6 +232,7 @@ function App() {
                       <option value="channel">Channel</option>
                       <option value="ventilators">Ventilators</option>
                       <option value="doorframes">Doorframes</option>
+                      <option value="corner cover">Corner cover</option>
                       <option value="NA">NA</option>
                     </select>
                   </div>
