@@ -60,10 +60,13 @@ body {
 
 @media (max-width: 600px) {
   .action-buttons {
+    flex-direction: column;
+    align-items: stretch;
     justify-content: center;
   }
   .action-buttons .btn {
-    flex: 1 1 100%;
+    flex: none;
+    width: 100%;
     justify-content: center;
   }
 }
