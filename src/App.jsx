@@ -6,6 +6,7 @@ import './index.css';
 function App() {
   const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
   const [advanceAmount, setAdvanceAmount] = useState('');
+  const [oldBalanceAmount, setOldBalanceAmount] = useState('');
   const [items, setItems] = useState([
     {
       id: crypto.randomUUID(),
@@ -111,8 +112,10 @@ function App() {
   };
 
   const grandTotal = items.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
+  const oldBalance = oldBalanceAmount ? Number(oldBalanceAmount) : 0;
   const advance = advanceAmount ? Number(advanceAmount) : 0;
-  const balance = grandTotal - advance;
+  const totalWithOldBalance = grandTotal + oldBalance;
+  const balance = totalWithOldBalance - advance;
 
   const renderBillTable = () => (
     <>
@@ -157,8 +160,18 @@ function App() {
         </tbody>
         <tfoot>
           <tr>
-            <td colSpan="5" style={{ border: '1px solid #e5e7eb', padding: '1rem 1.5rem', textAlign: 'right', fontWeight: '700', fontSize: '1.1rem' }}>Total Amount</td>
+            <td colSpan="5" style={{ border: '1px solid #e5e7eb', padding: '1rem 1.5rem', textAlign: 'right', fontWeight: '700', fontSize: '1.1rem' }}>Sub Total</td>
             <td style={{ border: '1px solid #e5e7eb', padding: '1rem 1.5rem', fontWeight: '800', fontSize: '1.2rem', color: '#4F46E5' }}>₹{grandTotal.toFixed(2)}</td>
+          </tr>
+          {oldBalance > 0 && (
+            <tr>
+              <td colSpan="5" style={{ border: '1px solid #e5e7eb', padding: '1rem 1.5rem', textAlign: 'right', fontWeight: '700', fontSize: '1.1rem' }}>Old Balance Amount</td>
+              <td style={{ border: '1px solid #e5e7eb', padding: '1rem 1.5rem', fontWeight: '700', fontSize: '1.1rem', color: '#059669' }}>₹{oldBalance.toFixed(2)}</td>
+            </tr>
+          )}
+          <tr>
+            <td colSpan="5" style={{ border: '1px solid #e5e7eb', padding: '1rem 1.5rem', textAlign: 'right', fontWeight: '700', fontSize: '1.1rem' }}>Total Amount</td>
+            <td style={{ border: '1px solid #e5e7eb', padding: '1rem 1.5rem', fontWeight: '800', fontSize: '1.2rem', color: '#4F46E5' }}>₹{totalWithOldBalance.toFixed(2)}</td>
           </tr>
           {advance > 0 && (
             <>
@@ -325,13 +338,33 @@ function App() {
               placeholder="Enter advance amount"
             />
           </div>
+          <div className="input-group">
+            <label>Old Balance Amount (Optional)</label>
+            <input 
+              type="number" 
+              min="0"
+              value={oldBalanceAmount} 
+              onChange={(e) => setOldBalanceAmount(e.target.value)} 
+              placeholder="Enter old balance amount"
+            />
+          </div>
         </div>
 
         <div className="summary-section print-hidden">
           <div className="summary-content">
             <div className="grand-total">
-              <span>Total Amount</span>
+              <span>Sub Total</span>
               <span className="amount">₹{grandTotal.toFixed(2)}</span>
+            </div>
+            {oldBalance > 0 && (
+              <div className="advance-total">
+                <span>Old Balance Amount</span>
+                <span className="amount">₹{oldBalance.toFixed(2)}</span>
+              </div>
+            )}
+            <div className="advance-total">
+              <span>Total Amount</span>
+              <span className="amount">₹{totalWithOldBalance.toFixed(2)}</span>
             </div>
             {advance > 0 && (
               <>
